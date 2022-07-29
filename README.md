@@ -1,2 +1,2 @@
 # like-file-router
-wip
+Router with paths like in Next or Sapper
