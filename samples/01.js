@@ -73,77 +73,30 @@ const router = createRouter(createServer(), {
 //   res.end('Page a/[id]')
 // })
 
-router.get('a/b/[...slug]', (_req, res) => {
-  res.end('Page a/b/[slug]')
-})
+const __get__ = (route) => {
+  router.get(route, (_req, res) => {
+    res.end('Page ' + route)
+  })
+}
 
-router.get('a/b/c-[...slug]', (_req, res) => {
-  res.end('Page a/b/c-[slug]')
-})
+__get__('a/b/[...slug]')
+__get__('a/b/c-[...slug]')
+__get__('a/b/[...slug]-c')
+__get__('a/b/[...c]-[...slug]')
+__get__('a/b/[...c]-[...slug]-[...d]')
 
-router.get('a/b/[...slug]-c', (_req, res) => {
-  res.end('Page a/b/[slug]-c')
-})
-
-router.get('a/b/[...c]-[...slug]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]')
-})
-
-router.get('a/b/[...c]-[...slug]-[...d]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]-[d]')
-})
-
-router.get('a/b/c', (_req, res) => {
-  res.end('Page a/b/c')
-})
-
-router.get('a/b/c2', (_req, _res, next) => {
-  next()
-})
-
-router.get('a/b/[slug]', (_req, res) => {
-  res.end('Page a/b/[slug]')
-})
-
-router.get('a/b/[slug([0-9]+)]', (_req, res) => {
-  res.end('Page a/b/[slug]')
-})
-
-router.get('a/b/c-[slug]', (_req, res) => {
-  res.end('Page a/b/c-[slug]')
-})
-
-router.get('a/b/[slug]-c', (_req, res) => {
-  res.end('Page a/b/[slug]-c')
-})
-
-router.get('a/b/[c]-[slug]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]')
-})
-
-router.get('a/b/[c][slug][d]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]-[d]')
-})
-
-router.get('a/b/[c]-[slug]-[d(\\w+)]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]-[d]-[e]')
-})
-
-router.get('a/b/[c]-[slug]-[d]-[e]-[f]-[g]-[zx]-[aa]-[a]-[axa]-[az]-[aab]-[ab]-[axba]-[azb]', (_req, res) => {
-  res.end('Page a/b/[c]-[slug]-[d]-[e]')
-})
-
-router.get('a/b/c', (_req, res) => {
-  res.end('Page a/b/c')
-})
-
-router.get('a/b/c2', (_req, _res, next) => {
-  next()
-})
-
-// router.get('a/[id]/[slug]', (_req, res) => {
-//   res.end('Page a/[id]/[slug]')
-// })
+__get__('a/b/c')
+__get__('a/b/c3')
+router.get('a/b/c2', (_req, _res, next) => { next() })
+__get__('a/b/[slug]')
+__get__('a/b/[slug([0-9]+)]')
+__get__('a/b/c-[slug]')
+__get__('a/b/c-[slug]-c')
+__get__('a/b/[slug]-c')
+__get__('a/b/[c]-[slug]')
+__get__('a/b/[c][slug][d]')
+__get__('a/b/[c]-[slug]-[d(\\w+)]')
+__get__('a/b/c-[slug]-[d]-[e]-[f]-[g]-[zx]-[aa]-[a]-[axa]-[az]-[aab]-[ab]-[axba]-[azb]')
 
 router.listen(3000)
 

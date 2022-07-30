@@ -27,7 +27,7 @@ const __createRouteItem__ = (a: string[]) => {
 
         let regex = '[^/]+?'
         if ((idx = slug.indexOf('(')) > -1) {
-          idLocal *= 2
+          idLocal *= 10
           regex = slug.slice(idx + 1, -1), slug = slug.slice(0, idx)
           regex = regex.replace(/<(.)>/gi, '\\$1')
         }
@@ -40,14 +40,6 @@ const __createRouteItem__ = (a: string[]) => {
     }
   }
 
-  try {
-    new RegExp(dirty)
-  } catch (e) {
-    console.error(e)
-  }
-
-  // for (let i = id.length; i-- > 0;) id[i] += id.length
-
   const res = {
     id,
     spread,
@@ -59,9 +51,13 @@ const __createRouteItem__ = (a: string[]) => {
 
 const medium = (a: number[]): number => {
   let res = 0
+
   for (let i = a.length; i-- > 0;) res += a[i]
+  
   if (a.length < 2 && a[0] === 1e9) res += 1e15
-  if (a[0] === 1e9 || a[a.length - 1] === 1e9 && res--) res += 1e12
+  if (a[a.length - 1] === 1e9) res += 1e11
+  if (a[0] === 1e9) res += 1e12
+
   return res
 }
 
@@ -119,15 +115,7 @@ export const createRoute = (
   }
 
   const _dirty = `^${_dirtyArr.join('\\/')}\\/*$`
-
-  let regex: RegExp
-  try {
-    regex = new RegExp(_dirty)
-  } catch (e) {
-    regex = /^error$/
-    console.error(e)
-  }
-
+  const regex = new RegExp(_dirty)
   const res = {
     count,
     id,
