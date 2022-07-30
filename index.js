@@ -109,25 +109,25 @@ class Router {
         })), d.listen = o.listen.bind(o);
     }
     add(s, o, ...a) {
-        for (var n, l, u, d, p = this, c = ((e, r, s) => {
-            e = t(e), s && (e = s + "/" + e);
-            for (var o, a, n = 0, l = [], u = !1, d = [], p = "", c = [], _ = !1, v = !1, f = 0, g = !1, m = !1, x = 0; x <= e.length; x++) o = e.charAt(x), 
-            f && f--, v && ("\\" === o ? f = 2 : "[" !== o || f ? "]" !== o || f || (g = !1) : g = !0), 
-            _ && !g && (")" === o ? v = !1 : "(" === o && (v = !0)), v || g || ("]" === o && _ ? (_ = !1, 
-            m = !0) : "[" !== o || _ || (_ = !0, c.push(p), p = "")), o && (_ || v || g || "/" !== o && "\\" !== o) ? (p += o, 
-            m && (m = !1, c.push(p), p = "")) : (p && (c.push(p), 1) || c.length) && (a = i(c), 
-            p = "", c = [], n++, l.push(h(a.id)), u = u || a.spread, d.push(a.dirty));
-            var y = "^" + d.join("\\/") + "\\/*$";
+        for (var n, l, u, d, p = this, c = ((e, r) => {
+            e = t(e);
+            for (var s, o, a = 0, n = [], l = !1, u = [], d = "", p = [], c = !1, _ = !1, v = 0, f = !1, g = !1, m = 0; m <= e.length; m++) s = e.charAt(m), 
+            v && v--, _ && ("\\" === s ? v = 2 : "[" !== s || v ? "]" !== s || v || (f = !1) : f = !0), 
+            c && !f && (")" === s ? _ = !1 : "(" === s && (_ = !0)), _ || f || ("]" === s && c ? (c = !1, 
+            g = !0) : "[" !== s || c || (c = !0, p.push(d), d = "")), s && (c || _ || f || "/" !== s && "\\" !== s) ? (d += s, 
+            g && (g = !1, p.push(d), d = "")) : (d && (p.push(d), 1) || p.length) && (o = i(p), 
+            d = "", p = [], a++, n.push(h(o.id)), l = l || o.spread, u.push(o.dirty));
+            var x = "^" + u.join("\\/") + "\\/*$";
             return {
-                count: n,
-                id: l,
-                spread: u,
+                count: a,
+                id: n,
+                spread: l,
                 route: e,
-                regex: new RegExp(y),
-                _dirty: y,
+                regex: new RegExp(x),
+                _dirty: x,
                 handlers: r
             };
-        })(o, r(...a), p.baseUrl), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), v = 0; v < _.length; v++) {
+        })(p.baseUrl + "/" + o, r(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), v = 0; v < _.length; v++) {
             (n = _[v]) in p._routes || (p._routes[n] = e(null), p._routes[n][-1] = e(null)), 
             l = p._routes[n], u = c.spread ? c.count in l[-1] ? l[-1][c.count] : l[-1][c.count] = [] : c.count in l ? l[c.count] : l[c.count] = [], 
             d = 0;

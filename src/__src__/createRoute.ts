@@ -62,10 +62,9 @@ const medium = (a: number[]): number => {
 }
 
 export const createRoute = (
-  s: string, handlers: TypeHandler[], baseUrl: string
+  s: string, handlers: TypeHandler[]
 ): TypeRoute => {
   s = trimSlashes(s)
-  if (baseUrl) s = baseUrl + '/' + s
 
   let count = 0
   const id: number[] = []

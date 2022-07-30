@@ -134,7 +134,7 @@ export class Router {
     ...handlers: TypeHandler[] | TypeHandler[][]
   ): this {
     const iam = this
-    const slug = createRoute(route, getHandlers(...handlers), iam.baseUrl)
+    const slug = createRoute(iam.baseUrl + '/' + route, getHandlers(...handlers))
 
     for (let types = getMethods(method),
       type: string, obj: any, routes: any[], k: number,
