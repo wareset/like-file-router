@@ -120,7 +120,6 @@ class Router {
                 spread: l,
                 route: e,
                 regex: new RegExp(U),
-                _dirty: U,
                 handlers: r
             };
         })(p.baseUrl + "/" + i, r(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), v = 0; v < _.length; v++) {

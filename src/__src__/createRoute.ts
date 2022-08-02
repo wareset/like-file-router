@@ -121,7 +121,6 @@ export const createRoute = (
     spread,
     route: s,
     regex,
-    _dirty,
     handlers
   }
 

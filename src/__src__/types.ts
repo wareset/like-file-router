@@ -51,7 +51,6 @@ export declare type TypeRoute = {
     route: string
     count: number
     spread: boolean
-    _dirty: string
     handlers: TypeHandler[]
     regex: RegExp
   }

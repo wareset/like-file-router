@@ -99,13 +99,13 @@ class Router {
             }
             var m = [ h ];
             null != l ? (t.params = l.groups || e(null), m[1] = s.handlers) : t.params = e(null);
-            var x = -1, y = 0, U = e => {
+            var x = -1, U = 0, y = e => {
                 if (null != e) {
                     var s = +e || +e.code || +e.status || +e.statusCode || 500;
                     (a[s] || (a[s] = n(s)))(t, r, e);
-                } else ++x in m[y] ? m[y][x](t, r, U) : ++y < m.length ? m[y][x = 0] ? m[y][x](t, r, U) : U() : a[m.length < 2 ? 404 : 500](t, r);
+                } else ++x in m[U] ? m[U][x](t, r, y) : ++U < m.length ? m[U][x = 0] ? m[U][x](t, r, y) : y() : a[m.length < 2 ? 404 : 500](t, r);
             };
-            U();
+            y();
         })), d.listen = o.listen.bind(o);
     }
     add(s, o, ...a) {
@@ -124,7 +124,6 @@ class Router {
                 spread: l,
                 route: e,
                 regex: new RegExp(x),
-                _dirty: x,
                 handlers: r
             };
         })(p.baseUrl + "/" + o, r(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), v = 0; v < _.length; v++) {
