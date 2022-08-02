@@ -18,7 +18,7 @@ export const getMethods = (method: string | string[]): string[] =>
   )
 
 export const statusCodesFactory =
-  (_code: number): TypeHandlerError => (_req, _res, _err): void => {
-    _res.statusCode = _code
-    _res.end(_err ? JSON.stringify(_err, null, 2) : '' + _code)
+  (code: number): TypeHandlerError => (_req, _res, _err): void => {
+    _res.statusCode = code
+    _res.end(_err ? JSON.stringify(_err, null, 2) : '' + code)
   }

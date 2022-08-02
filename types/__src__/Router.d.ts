@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { TypeRoute, TypeHttpServer, TypeHttpsServer, TypeHandler, TypeHandlerError } from '.';
+import { statusCodesFactory as statusCodesFactoryDefalut } from '.';
 declare const METHODS_LOWERS: string[];
 export { METHODS_LOWERS as METHODS };
 export declare class Router {
@@ -27,13 +28,14 @@ export declare class Router {
     _errors: {
         [key: string]: TypeHandlerError;
     };
+    _errorsFactory: typeof statusCodesFactoryDefalut;
     constructor(server: TypeHttpServer | TypeHttpsServer, { baseUrl, use, errors, errorsFactory }?: {
         baseUrl?: string;
         use?: TypeHandler[];
         errors?: {
             [key: string]: TypeHandlerError;
         };
-        errorsFactory?: (_code: number) => TypeHandlerError;
+        errorsFactory?: (code: number) => TypeHandlerError;
     });
     add(method: string | string[], route: string, ...handlers: TypeHandler[] | TypeHandler[][]): this;
 }

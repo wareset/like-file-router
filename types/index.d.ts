@@ -9,5 +9,5 @@ export declare const createRouter: (a_0: import("http").Server | import("https")
     errors?: {
         [key: string]: import("./__src__").TypeHandlerError;
     };
-    errorsFactory?: (_code: number) => import("./__src__").TypeHandlerError;
+    errorsFactory?: (code: number) => import("./__src__").TypeHandlerError;
 }) => Router;

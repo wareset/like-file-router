@@ -6,4 +6,4 @@ export declare const create: {
 };
 export declare const getHandlers: (...val: any) => TypeHandler[];
 export declare const getMethods: (method: string | string[]) => string[];
-export declare const statusCodesFactory: (_code: number) => TypeHandlerError;
+export declare const statusCodesFactory: (code: number) => TypeHandlerError;

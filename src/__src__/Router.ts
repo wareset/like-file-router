@@ -35,6 +35,7 @@ export class Router {
   declare patch: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
 
   declare _errors: { [key: string]: TypeHandlerError }
+  declare _errorsFactory: typeof statusCodesFactoryDefalut
 
   constructor(
     readonly server: TypeHttpServer | TypeHttpsServer,
@@ -56,10 +57,11 @@ export class Router {
       if (/* not NaN */ +k === +k) _statusCodes[k] = errors[k]
     }
     iam._errors = errors = _statusCodes
+    iam._errorsFactory = errorsFactory
 
-    for (let a = [404, 500], k = a.length; k-- > 0;) {
-      if (!(a[k] in errors)) errors[a[k]] = errorsFactory(a[k])
-    }
+    // for (let a = [404, 500], k = a.length; k-- > 0;) {
+    //   if (!(a[k] in errors)) errors[a[k]] = errorsFactory(a[k])
+    // }
 
     for (let k = METHODS_LOWERS.length; k-- > 0;) {
       (iam as any)[METHODS_LOWERS[k]] = (iam as any).add.bind(iam, METHODS_UPPERS[k])
@@ -75,14 +77,14 @@ export class Router {
         res.locals = res.locals || create(null)
         
         const method = req.method!.toUpperCase()
-        const count = req.parsedUrl._routes.length
+        const count = req.parsedUrl._.routes.length
         let matches: any = null
         let slug!: TypeRoute
 
         SEARCH_ROUTE: if (method in iam._routes) {
           if (count in iam._routes[method]) {
             for (let a = iam._routes[method][count], i = 0, l = a.length; i < l; i++) {
-              if ((matches = req.parsedUrl._route.match((slug = a[i]).regex)) != null) {
+              if ((matches = req.parsedUrl._.route.match((slug = a[i]).regex)) != null) {
                 break SEARCH_ROUTE
               }
             }
@@ -90,7 +92,7 @@ export class Router {
           for (let j = count; j >= 0; j--) {
             if (j in iam._routes[method][-1]) {
               for (let a = iam._routes[method][-1][j], i = 0, l = a.length; i < l; i++) {
-                if ((matches = req.parsedUrl._route.match((slug = a[i]).regex)) != null) {
+                if ((matches = req.parsedUrl._.route.match((slug = a[i]).regex)) != null) {
                   break SEARCH_ROUTE
                 }
               }
@@ -111,13 +113,14 @@ export class Router {
         const next = (err?: any): void => {
           if (err != null) {
             const code = +err || +err.code || +err.status || +err.statusCode || 500
-            ;(errors[code] || (errors[code] = errorsFactory(code)))(req, res, err)
+            ;(errors[code] || (errors[code] = iam._errorsFactory(code)))(req, res, err)
           } else if (++i in handlers[j]) {
             handlers[j][i](req, res, next)
           } else if (++j < handlers.length) {
             handlers[j][i = 0] ? handlers[j][i](req, res, next) : next()
           } else {
-            errors[handlers.length < 2 ? 404 : 500](req, res)
+            // errors[handlers.length < 2 ? 404 : 500](req, res)
+            next(handlers.length < 2 ? 404 : 500)
           }
         }
         next()

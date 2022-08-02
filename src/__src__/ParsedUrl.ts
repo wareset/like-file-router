@@ -6,7 +6,7 @@ import { trimSlashes } from '.'
 const getHeaderValue = (
   value: string | string[] | undefined
 ): string | null => {
-  if (value !== void 0 && value.length > 0) {
+  if (value != null && value.length > 0) {
     if (typeof value !== 'string') value = value[0] || ''
     const i = value.lastIndexOf(',')
     return i > -1 ? value.slice(i + 1).trim() : value.trim()
@@ -16,35 +16,27 @@ const getHeaderValue = (
 
 export class ParsedUrl {
   _: {
+    encrypted: any
     headers: IncomingHttpHeaders
-    encrypted: boolean
-    protocol?: string
-    host?: string | null
-    hostname?: string | null
-    port?: string | null
+
+    protocol: string | null
+    host: string | null
+    hostname: string | null
+    port: string | null
+
+    route: string
+    routes: string[]
   }
 
   path: string
   pathname: string
-  search: string | null
-  query: string | null
-  raw: string
+  search: string
+  query: string
   _raw: string
-  _route: string
-  _routes: string[]
+  raw: string
 
   constructor(req: TypeIncomingMessage) {
     let i: number
-    this._ = {
-      headers  : req.headers,
-      encrypted: !!(
-        (req as any).socket.encrypted || (req as any).connection.encrypted
-      ),
-      protocol: void 0,
-      host    : void 0,
-      hostname: void 0,
-      port    : void 0
-    }
     this.raw = this._raw = req.url!
 
     this.path = this._raw
@@ -54,51 +46,70 @@ export class ParsedUrl {
       this.query = this._raw.slice(i + 1)
       this.search = '?' + this.query
     } else {
-      this.search = this.query = null
+      this.search = this.query = ''
     }
 
-    this._route = trimSlashes(this.pathname)
-    if (this._route.indexOf('%') > -1) {
-      try { this._route = decodeURIComponent(this._route) } catch {}
+    let route = trimSlashes(this.pathname)
+    if (route.indexOf('%') > -1) {
+      try { route = decodeURIComponent(route) } catch {}
     }
-    this._routes = this._route.length > 0 ? this._route.split('/') : []
+
+    this._ = {
+      encrypted: (req as any).socket.encrypted || (req as any).connection.encrypted,
+      headers  : req.headers,
+      
+      protocol: null,
+      host    : null,
+      hostname: null,
+      port    : null,
+
+      route,
+      routes: route.length > 0 ? route.split('/') : []
+    }
   }
 
   get protocol(): string {
-    return this._.protocol !== void 0
+    return this._.protocol != null
       ? this._.protocol
       : this._.protocol =
           getHeaderValue(this._.headers['x-forwarded-proto']) ||
-          'http' + (this._.encrypted ? 's' : '')
+          'http' + (this._.encrypted ? 's:' : ':')
   }
 
-  get host(): string | null {
-    return this._.host !== void 0
+  get host(): string {
+    return this._.host != null
       ? this._.host
       : this._.host =
           getHeaderValue(this._.headers['x-forwarded-host']) ||
           getHeaderValue(this._.headers.host) ||
           getHeaderValue(this._.headers[':authority']) ||
-          null
+          ''
   }
 
-  get hostname(): string | null {
+  get hostname(): string {
     let i: number
-    return this._.hostname !== void 0
+    return this._.hostname != null
       ? this._.hostname
       : this._.hostname = !this.host
-        ? null
+        ? ''
         : (i = this._.host!.indexOf(':')) > -1
           ? this._.host!.slice(0, i)
           : this._.host!
   }
 
-  get port(): string | null {
+  get port(): string {
     let i: number
-    return this._.port !== void 0
+    return this._.port != null
       ? this._.port
       : this._.port = this.host && (i = this._.host!.indexOf(':')) > -1
         ? this._.host!.slice(i + 1)
-        : null
+        : ''
+  }
+
+  get origin(): string {
+    return this.protocol + '//' + this.host
+  }
+  get href(): string {
+    return this.origin + this._raw
   }
 }

@@ -4,23 +4,25 @@ import { TypeIncomingMessage } from '.';
 export declare class ParsedUrl {
     _: {
         headers: IncomingHttpHeaders;
-        encrypted: boolean;
-        protocol?: string;
-        host?: string | null;
-        hostname?: string | null;
-        port?: string | null;
+        encrypted: any;
+        protocol: string;
+        host: string;
+        hostname: string;
+        port: string;
+        route: string;
+        routes: string[];
     };
     path: string;
     pathname: string;
-    search: string | null;
-    query: string | null;
-    raw: string;
+    search: string;
+    query: string;
     _raw: string;
-    _route: string;
-    _routes: string[];
+    raw: string;
     constructor(req: TypeIncomingMessage);
     get protocol(): string;
-    get host(): string | null;
-    get hostname(): string | null;
-    get port(): string | null;
+    get host(): string;
+    get hostname(): string;
+    get port(): string;
+    get origin(): string;
+    get href(): string;
 }
