@@ -3,12 +3,12 @@ import { IncomingHttpHeaders } from 'http';
 import { TypeIncomingMessage } from '.';
 export declare class ParsedUrl {
     _: {
-        headers: IncomingHttpHeaders;
         encrypted: any;
-        protocol: string;
-        host: string;
-        hostname: string;
-        port: string;
+        headers: IncomingHttpHeaders;
+        protocol: string | null;
+        host: string | null;
+        hostname: string | null;
+        port: string | null;
         route: string;
         routes: string[];
     };

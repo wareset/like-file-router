@@ -91,13 +91,13 @@ class Router {
     constructor(o, {baseUrl: i = "", use: h = [], errors: a = {}, errorsFactory: l = s} = {}) {
         this.server = void 0, this.server = o;
         var p = this;
-        p._routes = e(null), p.baseUrl = t(i), h = r(h);
+        p._routes = e(null), p._baseUrl = t(i), h = r(h);
         var c = e(null);
         for (var d in a) +d == +d && (c[d] = a[d]);
         p._errors = a = c, p._errorsFactory = l;
         for (var _ = n.length; _-- > 0; ) p[n[_]] = p.add.bind(p, u[_]);
         o.on("request", ((t, r) => {
-            t.baseUrl = p.baseUrl, t.originalUrl = t.originalUrl || t.url, t.parsedUrl = t._parsedUrl = new ParsedUrl(t), 
+            t.baseUrl = p._baseUrl, t.originalUrl = t.originalUrl || t.url, t.parsedUrl = t._parsedUrl = new ParsedUrl(t), 
             r.locals = r.locals || e(null);
             var s, o = t.method.toUpperCase(), i = t.parsedUrl._.routes.length, l = null;
             t: if (o in p._routes) {
@@ -133,7 +133,7 @@ class Router {
                 regex: new RegExp(y),
                 handlers: r
             };
-        })(c.baseUrl + "/" + o, r(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), g = 0; g < _.length; g++) {
+        })(c._baseUrl + "/" + o, r(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), g = 0; g < _.length; g++) {
             (l = _[g]) in c._routes || (c._routes[l] = e(null), c._routes[l][-1] = e(null)), 
             n = c._routes[l], u = d.spread ? d.count in n[-1] ? n[-1][d.count] : n[-1][d.count] = [] : d.count in n ? n[d.count] : n[d.count] = [], 
             p = 0;

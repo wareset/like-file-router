@@ -14,8 +14,12 @@ export declare class Router {
             };
         };
     };
+    _baseUrl: string;
+    _errors: {
+        [key: string]: TypeHandlerError;
+    };
+    _errorsFactory: typeof statusCodesFactoryDefalut;
     listen: TypeHttpServer['listen'];
-    baseUrl: string;
     get: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
     head: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
     post: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
@@ -25,10 +29,6 @@ export declare class Router {
     options: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
     trace: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
     patch: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    _errors: {
-        [key: string]: TypeHandlerError;
-    };
-    _errorsFactory: typeof statusCodesFactoryDefalut;
     constructor(server: TypeHttpServer | TypeHttpsServer, { baseUrl, use, errors, errorsFactory }?: {
         baseUrl?: string;
         use?: TypeHandler[];

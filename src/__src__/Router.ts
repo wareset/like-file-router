@@ -21,8 +21,13 @@ export class Router {
   declare _routes: {
     [key: string]: { [key: string]: TypeRoute[] } & { '-1': { [key: string]: TypeRoute[] } }
   }
+
+  declare _baseUrl: string
+
+  declare _errors: { [key: string]: TypeHandlerError }
+  declare _errorsFactory: typeof statusCodesFactoryDefalut
+  
   declare listen: TypeHttpServer['listen']
-  declare baseUrl: string
 
   declare get: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
   declare head: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
@@ -33,9 +38,6 @@ export class Router {
   declare options: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
   declare trace: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
   declare patch: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-
-  declare _errors: { [key: string]: TypeHandlerError }
-  declare _errorsFactory: typeof statusCodesFactoryDefalut
 
   constructor(
     readonly server: TypeHttpServer | TypeHttpsServer,
@@ -48,7 +50,7 @@ export class Router {
   ) {
     const iam = this
     iam._routes = create(null)
-    iam.baseUrl = trimSlashes(baseUrl)
+    iam._baseUrl = trimSlashes(baseUrl)
     use = getHandlers(use)
     // console.log(iam)
 
@@ -70,7 +72,7 @@ export class Router {
     server.on(
       'request',
       (req: TypeIncomingMessage, res: TypeServerResponse): void => {
-        req.baseUrl = iam.baseUrl
+        req.baseUrl = iam._baseUrl
         req.originalUrl = req.originalUrl || req.url!
         req.parsedUrl = req._parsedUrl = new ParsedUrl(req)
 
@@ -137,7 +139,7 @@ export class Router {
     ...handlers: TypeHandler[] | TypeHandler[][]
   ): this {
     const iam = this
-    const slug = createRoute(iam.baseUrl + '/' + route, getHandlers(...handlers))
+    const slug = createRoute(iam._baseUrl + '/' + route, getHandlers(...handlers))
 
     for (let types = getMethods(method),
       type: string, obj: any, routes: any[], k: number,
