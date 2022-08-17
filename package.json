@@ -26,15 +26,11 @@
     "types"
   ],
   "scripts": {
-    "dester": "dester ./src ./ --babel -t types",
+    "dester": "dester ./src ./ -t types",
     "build": "npm run -s dester -- -r -m",
     "dev": "npm run -s dester -- -w --no-r -m"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.0",
-    "@babel/plugin-proposal-class-properties": "^7.18.0",
-    "@babel/plugin-transform-block-scoping": "^7.18.0",
-    "@babel/plugin-transform-template-literals": "^7.18.0",
     "dester": "0.x",
     "ts-node": "^10.9.0",
     "typescript": "4.x"

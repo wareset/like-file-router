@@ -101,4 +101,4 @@ __get__('a/b/c-[slug]-[d]-[e]-[f]-[g]-[zx]-[aa]-[a]-[axa]-[az]-[aab]-[ab]-[axba]
 router.listen(3000)
 
 console.log(router)
-console.log(router._routes.GET[3].forEach((v) => console.log(v.route)))
+router._routes.GET[3].forEach((v) => console.log(v.route))
