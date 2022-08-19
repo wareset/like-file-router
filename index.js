@@ -91,21 +91,21 @@ class Router {
     constructor(o, {baseUrl: i = "", use: h = [], errors: a = {}, errorsFactory: l = s} = {}) {
         this.server = void 0, this.server = o;
         var p = this;
-        p._routes = e(null), p._baseUrl = t(i), h = r(h);
-        var c = e(null);
-        for (var d in a) +d == +d && (c[d] = a[d]);
-        p._errors = a = c, p._errorsFactory = l;
-        for (var _ = n.length; _-- > 0; ) p[n[_]] = p.add.bind(p, u[_]);
+        p._routes = e(null), p._baseUrl = t(i);
+        var c = r(h), d = e(null);
+        for (var _ in a) +_ == +_ && (d[_] = a[_]);
+        p._errors = a = d, p._errorsFactory = l;
+        for (var g = n.length; g-- > 0; ) p[n[g]] = p.add.bind(p, u[g]);
         o.on("request", ((t, r) => {
             t.baseUrl = p._baseUrl, t.originalUrl = t.originalUrl || t.url, t.parsedUrl = t._parsedUrl = new ParsedUrl(t), 
             r.locals = r.locals || e(null);
-            var s, o = t.method.toUpperCase(), i = t.parsedUrl._.routes.length, l = null;
+            var s, o = t.method.toUpperCase(), i = t.parsedUrl._.routes.length, h = null;
             t: if (o in p._routes) {
-                if (i in p._routes[o]) for (var n = p._routes[o][i], u = 0, c = n.length; u < c; u++) if (null != (l = t.parsedUrl._.route.match((s = n[u]).regex))) break t;
-                for (var d = i; d >= 0; d--) if (d in p._routes[o][-1]) for (var _ = p._routes[o][-1][d], g = 0, f = _.length; g < f; g++) if (null != (l = t.parsedUrl._.route.match((s = _[g]).regex))) break t;
+                if (i in p._routes[o]) for (var l = p._routes[o][i], n = 0, u = l.length; n < u; n++) if (null != (h = t.parsedUrl._.route.match((s = l[n]).regex))) break t;
+                for (var d = i; d >= 0; d--) if (d in p._routes[o][-1]) for (var _ = p._routes[o][-1][d], g = 0, f = _.length; g < f; g++) if (null != (h = t.parsedUrl._.route.match((s = _[g]).regex))) break t;
             }
-            var v = [ h ];
-            null != l ? (t.params = l.groups || e(null), v[1] = s.handlers) : t.params = e(null);
+            var v = [ c ];
+            null != h ? (t.params = h.groups || e(null), v[1] = s.handlers) : t.params = e(null);
             var m = -1, y = 0, x = e => {
                 if (null != e) {
                     var s = +e || +e.code || +e.status || +e.statusCode || 500;

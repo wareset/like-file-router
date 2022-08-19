@@ -3,6 +3,8 @@ import { TypeRoute, TypeHttpServer, TypeHttpsServer, TypeHandler, TypeHandlerErr
 import { statusCodesFactory as statusCodesFactoryDefalut } from '.';
 declare const METHODS_LOWERS: string[];
 export { METHODS_LOWERS as METHODS };
+declare type TypeMaybeHandlerList = (TypeHandler | null | undefined | boolean)[];
+declare type TypeMaybeHandlers = TypeMaybeHandlerList | TypeMaybeHandlerList[];
 export declare class Router {
     readonly server: TypeHttpServer | TypeHttpsServer;
     _routes: {
@@ -20,22 +22,22 @@ export declare class Router {
     };
     _errorsFactory: typeof statusCodesFactoryDefalut;
     listen: TypeHttpServer['listen'];
-    get: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    head: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    post: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    put: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    delete: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    connect: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    options: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    trace: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
-    patch: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this;
+    get: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    head: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    post: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    put: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    delete: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    connect: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    options: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    trace: (route: string, ...handlers: TypeMaybeHandlers) => this;
+    patch: (route: string, ...handlers: TypeMaybeHandlers) => this;
     constructor(server: TypeHttpServer | TypeHttpsServer, { baseUrl, use, errors, errorsFactory }?: {
         baseUrl?: string;
-        use?: TypeHandler[];
+        use?: TypeMaybeHandlerList;
         errors?: {
             [key: string]: TypeHandlerError;
         };
         errorsFactory?: (code: number) => TypeHandlerError;
     });
-    add(method: string | string[], route: string, ...handlers: TypeHandler[] | TypeHandler[][]): this;
+    add(method: string | string[], route: string, ...handlers: TypeMaybeHandlers): this;
 }

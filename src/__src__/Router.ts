@@ -17,6 +17,9 @@ const METHODS_UPPERS = METHODS.toUpperCase().split('|')
 
 export { METHODS_LOWERS as METHODS }
 
+type TypeMaybeHandlerList = (TypeHandler | null | undefined | boolean)[]
+type TypeMaybeHandlers = TypeMaybeHandlerList | TypeMaybeHandlerList[]
+
 export class Router {
   declare _routes: {
     [key: string]: { [key: string]: TypeRoute[] } & { '-1': { [key: string]: TypeRoute[] } }
@@ -29,21 +32,21 @@ export class Router {
   
   declare listen: TypeHttpServer['listen']
 
-  declare get: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare head: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare post: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare put: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare delete: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare connect: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare options: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare trace: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
-  declare patch: (route: string, ...handlers: TypeHandler[] | TypeHandler[][]) => this
+  declare get: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare head: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare post: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare put: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare delete: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare connect: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare options: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare trace: (route: string, ...handlers: TypeMaybeHandlers) => this
+  declare patch: (route: string, ...handlers: TypeMaybeHandlers) => this
 
   constructor(
     readonly server: TypeHttpServer | TypeHttpsServer,
     {
       baseUrl = '',
-      use = [] as TypeHandler[],
+      use = [] as TypeMaybeHandlerList,
       errors = {} as { [key: string]: TypeHandlerError },
       errorsFactory = statusCodesFactoryDefalut
     } = {}
@@ -51,7 +54,7 @@ export class Router {
     const iam = this
     iam._routes = create(null)
     iam._baseUrl = trimSlashes(baseUrl)
-    use = getHandlers(use)
+    const _use = getHandlers(use)
     // console.log(iam)
 
     const _statusCodes = create(null)
@@ -102,7 +105,7 @@ export class Router {
           }
         }
 
-        const handlers = [use]
+        const handlers = [_use]
 
         if (matches != null) {
           req.params = matches.groups || create(null)
@@ -136,7 +139,7 @@ export class Router {
   add(
     method: string | string[],
     route: string,
-    ...handlers: TypeHandler[] | TypeHandler[][]
+    ...handlers: TypeMaybeHandlers
   ): this {
     const iam = this
     const slug = createRoute(iam._baseUrl + '/' + route, getHandlers(...handlers))
