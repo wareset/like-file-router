@@ -26,11 +26,8 @@ export class Router {
   }
 
   declare _baseUrl: string
-
   declare _errors: { [key: string]: TypeHandlerError }
   declare _errorsFactory: typeof statusCodesFactoryDefalut
-  
-  declare listen: TypeHttpServer['listen']
 
   declare get: (route: string, ...handlers: TypeMaybeHandlers) => this
   declare head: (route: string, ...handlers: TypeMaybeHandlers) => this
@@ -58,9 +55,7 @@ export class Router {
     // console.log(iam)
 
     const _statusCodes = create(null)
-    for (const k in errors) {
-      if (/* not NaN */ +k === +k) _statusCodes[k] = errors[k]
-    }
+    for (const k in errors) if (+k === +k) _statusCodes[k] = errors[k]
     iam._errors = errors = _statusCodes
     iam._errorsFactory = errorsFactory
 
@@ -133,7 +128,12 @@ export class Router {
       }
     )
 
-    iam.listen = server.listen.bind(server)
+    // iam.listen = server.listen.bind(server)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  listen(...a: Parameters<TypeHttpServer['listen']>) {
+    return this.server.listen(...a)
   }
 
   add(

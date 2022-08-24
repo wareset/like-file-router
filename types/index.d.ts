@@ -1,4 +1,5 @@
 /// <reference types="node" />
+/// <reference types="node" />
 export { Router, METHODS } from './__src__';
 import { Router } from './__src__';
 export default Router;

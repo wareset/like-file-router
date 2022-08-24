@@ -98,27 +98,30 @@ class Router {
             var s, o = t.method.toUpperCase(), i = t.parsedUrl._.routes.length, h = null;
             t: if (o in c._routes) {
                 if (i in c._routes[o]) for (var l = c._routes[o][i], n = 0, u = l.length; n < u; n++) if (null != (h = t.parsedUrl._.route.match((s = l[n]).regex))) break t;
-                for (var d = i; d >= 0; d--) if (d in c._routes[o][-1]) for (var _ = c._routes[o][-1][d], g = 0, f = _.length; g < f; g++) if (null != (h = t.parsedUrl._.route.match((s = _[g]).regex))) break t;
+                for (var d = i; d >= 0; d--) if (d in c._routes[o][-1]) for (var _ = c._routes[o][-1][d], g = 0, v = _.length; g < v; g++) if (null != (h = t.parsedUrl._.route.match((s = _[g]).regex))) break t;
             }
-            var v = [ p ];
-            null != h ? (t.params = h.groups || r(null), v[1] = s.handlers) : t.params = r(null);
+            var f = [ p ];
+            null != h ? (t.params = h.groups || r(null), f[1] = s.handlers) : t.params = r(null);
             var m = -1, y = 0, U = r => {
                 if (null != r) {
                     var s = +r || +r.code || +r.status || +r.statusCode || 500;
                     (a[s] || (a[s] = c._errorsFactory(s)))(t, e, r);
-                } else ++m in v[y] ? v[y][m](t, e, U) : ++y < v.length ? v[y][m = 0] ? v[y][m](t, e, U) : U() : U(v.length < 2 ? 404 : 500);
+                } else ++m in f[y] ? f[y][m](t, e, U) : ++y < f.length ? f[y][m = 0] ? f[y][m](t, e, U) : U() : U(f.length < 2 ? 404 : 500);
             };
             U();
-        })), c.listen = o.listen.bind(o);
+        }));
+    }
+    listen(...t) {
+        return this.server.listen(...t);
     }
     add(s, o, ...a) {
         for (var l, n, u, c, p = this, d = ((r, e) => {
             r = t(r);
-            for (var s, o, a = 0, l = [], n = !1, u = [], c = "", p = [], d = !1, _ = !1, g = 0, f = !1, v = !1, m = 0; m <= r.length; m++) s = r.charAt(m), 
-            g && g--, _ && ("\\" === s ? g = 2 : "[" !== s || g ? "]" !== s || g || (f = !1) : f = !0), 
-            d && !f && (")" === s ? _ = !1 : "(" === s && (_ = !0)), _ || f || ("]" === s && d ? (d = !1, 
-            v = !0) : "[" !== s || d || (d = !0, p.push(c), c = "")), s && (d || _ || f || "/" !== s && "\\" !== s) ? (c += s, 
-            v && (v = !1, p.push(c), c = "")) : (c && (p.push(c), 1) || p.length) && (o = i(p), 
+            for (var s, o, a = 0, l = [], n = !1, u = [], c = "", p = [], d = !1, _ = !1, g = 0, v = !1, f = !1, m = 0; m <= r.length; m++) s = r.charAt(m), 
+            g && g--, _ && ("\\" === s ? g = 2 : "[" !== s || g ? "]" !== s || g || (v = !1) : v = !0), 
+            d && !v && (")" === s ? _ = !1 : "(" === s && (_ = !0)), _ || v || ("]" === s && d ? (d = !1, 
+            f = !0) : "[" !== s || d || (d = !0, p.push(c), c = "")), s && (d || _ || v || "/" !== s && "\\" !== s) ? (c += s, 
+            f && (f = !1, p.push(c), c = "")) : (c && (p.push(c), 1) || p.length) && (o = i(p), 
             c = "", p = [], a++, l.push(h(o.id)), n = n || o.spread, u.push(o.dirty));
             var y = "^" + u.join("\\/") + "\\/*$";
             return {
@@ -133,10 +136,10 @@ class Router {
             (l = _[g]) in p._routes || (p._routes[l] = r(null), p._routes[l][-1] = r(null)), 
             n = p._routes[l], u = d.spread ? d.count in n[-1] ? n[-1][d.count] : n[-1][d.count] = [] : d.count in n ? n[d.count] : n[d.count] = [], 
             c = 0;
-            for (var f, v = d.id, m = 0; c < u.length; c++) {
-                f = u[c].id;
-                for (var y = 0; y < v.length && !(y > f.length || 0 != (m = v[y] - f[y])); y++) ;
-                if ((0 !== m ? m : f.length - v.length) > 0) break;
+            for (var v, f = d.id, m = 0; c < u.length; c++) {
+                v = u[c].id;
+                for (var y = 0; y < f.length && !(y > v.length || 0 != (m = f[y] - v[y])); y++) ;
+                if ((0 !== m ? m : v.length - f.length) > 0) break;
             }
             u.splice(c, 0, d);
         }
