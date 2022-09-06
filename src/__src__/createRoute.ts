@@ -114,7 +114,7 @@ export const createRoute = (
   }
 
   const _dirty = `^${_dirtyArr.join('\\/')}\\/*$`
-  const regex = new RegExp(_dirty)
+  const regex = new RegExp(_dirty, 'i')
   const res = {
     count,
     id,

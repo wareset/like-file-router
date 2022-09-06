@@ -133,7 +133,7 @@ class Router {
                 id: l,
                 spread: n,
                 route: r,
-                regex: new RegExp(y),
+                regex: new RegExp(y, "i"),
                 handlers: e
             };
         })(c._baseUrl + "/" + o, e(...a)), _ = (t => [].concat(...[].concat(t).map((t => t.trim().toUpperCase().split(/[^-\w]+/)))))(s), g = 0; g < _.length; g++) {
