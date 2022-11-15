@@ -1,4 +1,4 @@
-import {
+import type {
   TypeRoute,
   TypeHttpServer, TypeHttpsServer,
   TypeHandler, TypeHandlerError,
@@ -69,7 +69,7 @@ export class Router {
 
     server.on(
       'request',
-      (req: TypeIncomingMessage, res: TypeServerResponse): void => {
+      function(req: TypeIncomingMessage, res: TypeServerResponse): void {
         req.baseUrl = iam._baseUrl
         req.originalUrl = req.originalUrl || req.url!
         req.parsedUrl = req._parsedUrl = new ParsedUrl(req)
@@ -110,7 +110,7 @@ export class Router {
         }
 
         let i = -1, j = 0
-        const next = (err?: any): void => {
+        function next(err?: any): void {
           if (err != null) {
             const code = +err || +err.code || +err.status || +err.statusCode || 500
             ;(errors[code] || (errors[code] = iam._errorsFactory(code)))(req, res, err)

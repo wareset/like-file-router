@@ -1,5 +1,5 @@
-export { Router, METHODS } from './__src__'
-import { Router } from './__src__'
+export { Router, METHODS } from './_includes'
+import { Router } from './_includes'
 export default Router
 
 export type {
@@ -8,8 +8,8 @@ export type {
   TypeError,
   TypeIncomingMessage,
   TypeServerResponse
-} from './__src__'
+} from './_includes'
 
-export const createRouter = (
+export function createRouter(
   ...a: ConstructorParameters<typeof Router>
-): Router => new Router(...a)
+): Router { return new Router(...a) }

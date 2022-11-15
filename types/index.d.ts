@@ -1,14 +1,5 @@
-/// <reference types="node" />
-/// <reference types="node" />
-export { Router, METHODS } from './__src__';
-import { Router } from './__src__';
+export { Router, METHODS } from './_includes';
+import { Router } from './_includes';
 export default Router;
-export type { TypeHandler, TypeHandlerError, TypeError, TypeIncomingMessage, TypeServerResponse } from './__src__';
-export declare const createRouter: (a_0: import("http").Server | import("https").Server, a_1?: {
-    baseUrl?: string;
-    use?: (boolean | import("./__src__").TypeHandler)[];
-    errors?: {
-        [key: string]: import("./__src__").TypeHandlerError;
-    };
-    errorsFactory?: (code: number) => import("./__src__").TypeHandlerError;
-}) => Router;
+export type { TypeHandler, TypeHandlerError, TypeError, TypeIncomingMessage, TypeServerResponse } from './_includes';
+export declare function createRouter(...a: ConstructorParameters<typeof Router>): Router;

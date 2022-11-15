@@ -11,7 +11,7 @@ import type { ParsedUrl } from '.'
 // import { ReqGetHeader } from '.'
 // import { ResGetHeader, ResSetHeader, ResJson } from '.'
 
-export { TypeHttpServer, TypeHttpsServer }
+export type { TypeHttpServer, TypeHttpsServer }
 
 export interface TypeIncomingMessage extends IncomingMessage {
   parsedUrl: ParsedUrl
@@ -26,13 +26,13 @@ export interface TypeServerResponse extends ServerResponse {
   locals: { [key: string]: any }
 }
 
-export declare type TypeHandler = (
+export type TypeHandler = (
   req: TypeIncomingMessage,
   res: TypeServerResponse,
   next: (err?: any) => void
 ) => void
 
-export declare type TypeError =
+export type TypeError =
   | number
   | { [key: string]: any; code: number }
   | { [key: string]: any; status: number }
@@ -40,13 +40,13 @@ export declare type TypeError =
   | undefined
   | null
 
-export declare type TypeHandlerError = (
+export type TypeHandlerError = (
     req: TypeIncomingMessage,
     res: TypeServerResponse,
     err?: TypeError,
   ) => void
 
-export declare type TypeRoute = {
+export type TypeRoute = {
     id: number[]
     route: string
     count: number

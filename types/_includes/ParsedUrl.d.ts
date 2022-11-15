@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { IncomingHttpHeaders } from 'http';
-import { TypeIncomingMessage } from '.';
+import type { IncomingHttpHeaders } from 'http';
+import type { TypeIncomingMessage } from '.';
 export declare class ParsedUrl {
     _: {
         encrypted: any;

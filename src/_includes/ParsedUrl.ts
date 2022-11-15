@@ -1,11 +1,11 @@
-import { IncomingHttpHeaders } from 'http'
+import type { IncomingHttpHeaders } from 'http'
 
-import { TypeIncomingMessage } from '.'
+import type { TypeIncomingMessage } from '.'
 import { trimSlashes } from '.'
 
-const getHeaderValue = (
+function getHeaderValue(
   value: string | string[] | undefined
-): string | null => {
+): string | null {
   if (value != null && value.length > 0) {
     if (typeof value !== 'string') value = value[0] || ''
     const i = value.lastIndexOf(',')

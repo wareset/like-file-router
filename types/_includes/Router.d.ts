@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import { TypeRoute, TypeHttpServer, TypeHttpsServer, TypeHandler, TypeHandlerError } from '.';
+import type { TypeRoute, TypeHttpServer, TypeHttpsServer, TypeHandler, TypeHandlerError } from '.';
 import { statusCodesFactory as statusCodesFactoryDefalut } from '.';
 declare const METHODS_LOWERS: string[];
 export { METHODS_LOWERS as METHODS };
@@ -37,8 +37,8 @@ export declare class Router {
         errors?: {
             [key: string]: TypeHandlerError;
         };
-        errorsFactory?: (code: number) => TypeHandlerError;
+        errorsFactory?: typeof statusCodesFactoryDefalut;
     });
-    listen(...a: Parameters<TypeHttpServer['listen']>): TypeHttpServer | TypeHttpsServer;
+    listen(...a: Parameters<TypeHttpServer['listen']>): TypeHttpServer<typeof import("http").IncomingMessage, typeof import("http").ServerResponse> | TypeHttpsServer<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>;
     add(method: string | string[], route: string, ...handlers: TypeMaybeHandlers): this;
 }

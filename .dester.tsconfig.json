@@ -1,0 +1,25 @@
+{
+  "include": [
+    "/home/rease/data/dev/packages/like-file-router/src/**/*"
+  ],
+  "exclude": [
+    "/home/rease/data/dev/packages/like-file-router/src/**/node_modules",
+    "/home/rease/data/dev/packages/like-file-router/src/**/_*",
+    "/home/rease/data/dev/packages/like-file-router/src/**/*.test.*",
+    "/home/rease/data/dev/packages/like-file-router/src/**/*.tests.*"
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "/home/rease/data/dev/packages/like-file-router/types"
+  }
+}

@@ -2,7 +2,7 @@
 import type { Server as TypeHttpServer, IncomingMessage, ServerResponse } from 'http';
 import type { Server as TypeHttpsServer } from 'https';
 import type { ParsedUrl } from '.';
-export { TypeHttpServer, TypeHttpsServer };
+export type { TypeHttpServer, TypeHttpsServer };
 export interface TypeIncomingMessage extends IncomingMessage {
     parsedUrl: ParsedUrl;
     _parsedUrl: ParsedUrl;

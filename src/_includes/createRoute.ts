@@ -1,10 +1,12 @@
-import { TypeRoute, TypeHandler } from '.'
+import type { TypeRoute, TypeHandler } from '.'
 import { trimSlashes } from '.'
 
-const __esc__ = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+function __esc__(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const __createRouteItem__ = (a: string[]) => {
+function __createRouteItem__(a: string[]) {
   const id: number[] = []
   let spread = false
 
@@ -49,7 +51,7 @@ const __createRouteItem__ = (a: string[]) => {
   return res
 }
 
-const medium = (a: number[]): number => {
+function medium(a: number[]): number {
   let res = 0
 
   for (let i = a.length; i-- > 0;) res += a[i]
@@ -61,9 +63,9 @@ const medium = (a: number[]): number => {
   return res
 }
 
-export const createRoute = (
+export function createRoute(
   s: string, handlers: TypeHandler[]
-): TypeRoute => {
+): TypeRoute {
   s = trimSlashes(s)
 
   let count = 0
