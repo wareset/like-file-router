@@ -39,9 +39,7 @@
   },
   "devDependencies": {
     "dester": "1.0.x",
-    "ts-node": "^10.9.2"
-  },
-  "peerDependencies": {
-    "typescript": "5.x"
+    "ts-node": "^10.9.2",
+    "typescript": "*"
   }
 }

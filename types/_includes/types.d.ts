@@ -17,8 +17,8 @@ export interface TypeServerResponse extends ServerResponse {
         [key: string]: any;
     };
 }
-export declare type TypeHandler = (req: TypeIncomingMessage, res: TypeServerResponse, next: (err?: any) => void) => void;
-export declare type TypeError = number | {
+export type TypeHandler = (req: TypeIncomingMessage, res: TypeServerResponse, next: (err?: any) => void) => void;
+export type TypeError = number | {
     [key: string]: any;
     code: number;
 } | {
@@ -28,8 +28,8 @@ export declare type TypeError = number | {
     [key: string]: any;
     statusCode: number;
 } | undefined | null;
-export declare type TypeHandlerError = (req: TypeIncomingMessage, res: TypeServerResponse, err?: TypeError) => void;
-export declare type TypeRoute = {
+export type TypeHandlerError = (req: TypeIncomingMessage, res: TypeServerResponse, err?: TypeError) => void;
+export type TypeRoute = {
     id: number[];
     route: string;
     count: number;

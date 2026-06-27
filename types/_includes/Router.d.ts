@@ -4,8 +4,8 @@ import type { TypeRoute, TypeHttpServer, TypeHttpsServer, TypeHandler, TypeHandl
 import { statusCodesFactory as statusCodesFactoryDefalut } from '.';
 declare const METHODS_LOWERS: string[];
 export { METHODS_LOWERS as METHODS };
-declare type TypeMaybeHandlerList = (TypeHandler | null | undefined | boolean)[];
-declare type TypeMaybeHandlers = TypeMaybeHandlerList | TypeMaybeHandlerList[];
+type TypeMaybeHandlerList = (TypeHandler | null | undefined | boolean)[];
+type TypeMaybeHandlers = TypeMaybeHandlerList | TypeMaybeHandlerList[];
 export declare class Router {
     readonly server: TypeHttpServer | TypeHttpsServer;
     _routes: {
